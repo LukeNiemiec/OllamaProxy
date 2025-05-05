@@ -1,0 +1,65 @@
+
+  . FUNCTIONAL: llama3.2:1b
+
+  . CODING                    
+      . syntax    ->  codegemma:2b
+      . big       ->  qwen2.5-coder:0.5b
+      . linux     ->  shell-commands-qwen2-1.5b
+
+  . GENERAL QUESTIONS     -> deepseek-r1:8b
+  
+  . UNCENSORED            -> llama2-uncensored:7b
+  
+  . ReRANKING             -> bge-reranker-v2-m3
+  
+  . LONG CONTEXT          -> granite3.2:8b
+  	. writing
+  	. Thinking
+
+  . MATH					-> qwen2-math:1.5b
+
+-------------------------------------------------------------------
+
+
+
+[Tools]:
+
+	[llama3.2:1b] | [qwen2.5:0.5b]
+		. tool_selection()
+		. answer_easy_question()
+
+	[granite3.2:8b]	
+		. writing
+		. thinking			
+		. summarization		
+		. text analysis		
+		. Retrieval Augmented Generation (RAG) 
+
+	[qwen2.5-coder:0.5b]
+		. programming syntax 
+		. error checking
+		. coding teacher
+
+	[qwen2-math:1.5b]: 		math problems
+
+ 	[llama2-uncensored:7b]: illegal questions
+ 	
+----------------------------------------------------------------
+
+[MODELS]:
+	. qwen2.5-coder:0.5b					-> syntax 
+	. llama2-uncensored:7b					-> illegal questions
+	. deepseek-r1:8b						-> general
+	. qwen2-math:1.5b						-> math problems
+	. llama3.2:1b							-> tool calling
+	. granite3.2:8b							-> writing
+
+
+	TODO: 
+		jeffh/intfloat-multilingual-e5-large-instruct -> selector
+		
+			. interacting with emmbedded models and using them in many ways
+			
+			. testing selector instructions
+	
+----------------------------------------------------------------

@@ -1,0 +1,183 @@
+FROM qwen2.5:0.5b
+
+PARAMETER temperature 0
+PARAMETER repeat_penalty 0.4
+PARAMETER repeat_last_n -1
+PARAMETER num_ctx 4096
+PARAMETER seed 1
+
+SYSTEM """
+your purpose is to categorize prompts into any of the following categories:
+	 MATH: for a prompt that is asking a question that requires math to solve,
+	 CODING: for a prompt that is asking a question that requires coding knowledge to answer
+	 ILLEGAL: for a prompt that requires knowledge of illegal topics to elaborate or answer
+	 GENERAL: for a prompt that cant be categorized as either MATH, CODING, or ILLEGAL
+"""
+
+MESSAGE user How many different ways can you arrange the numbers from 1 to 5 on a chessboard?
+MESSAGE assistant MATH
+MESSAGE user If a number is divisible by both 3 and 5, what is its remainder when divided by 15?
+MESSAGE assistant MATH
+MESSAGE user What is the area of a square with side length equal to 4 meters?
+MESSAGE assistant MATH
+MESSAGE user How can you add two fractions with different denominators that have the same numerator?
+MESSAGE assistant MATH
+MESSAGE user What percentage of 1200 is 780?
+MESSAGE assistant MATH
+MESSAGE user If one angle in a right triangle measures 30 degrees, what are the angles in the other two sides?
+MESSAGE assistant MATH
+MESSAGE user How do you find the volume of a cylinder with radius 4 meters and height 6 meters?
+MESSAGE assistant MATH
+MESSAGE user What is the distance between the points (2, 3) and (5, -1)?
+MESSAGE assistant MATH
+MESSAGE user 'If a parabola has its vertex at (0, 0), what are the coordinates of its focus and directrix?
+MESSAGE assistant MATH
+MESSAGE user What is the sum of the first 100 positive integers?
+MESSAGE assistant MATH
+MESSAGE user What is the value of 2(x + 3) when x = 5?
+MESSAGE assistant MATH
+MESSAGE user If a and b have an equation where a * b = 45, what is the value of a / (a - b)?
+MESSAGE assistant MATH
+MESSAGE user Solve for y in the equation: 2y - 6 = 18
+MESSAGE assistant MATH
+MESSAGE user What is the distance between points (-3, 7) and (4, -2)?
+MESSAGE assistant MATH
+MESSAGE user If x + 2 = 8, what is the value of 3x^2 - 9x?
+MESSAGE assistant MATH
+MESSAGE user Solve for y in the equation: 2y + 3 = 10
+MESSAGE assistant MATH
+MESSAGE user What is the area of a rectangle with length 4 cm and width 5 cm?
+MESSAGE assistant MATH
+MESSAGE user If x * y = 18, what is the value of (x / y)^2?
+MESSAGE assistant MATH
+MESSAGE user Solve for x in the equation: -3 + 2x = 11','MATH'
+MESSAGE user What is the slope of a line that passes through points (4, 2) and (-1, -6)?
+MESSAGE assistant MATH
+MESSAGE user If f(x) = 2x^2 - 5, what is the value of f(3)?
+MESSAGE assistant MATH
+MESSAGE user How do you simplify the expression: 8 / 2 * 4 + 7?
+MESSAGE assistant MATH
+MESSAGE user 'What is the value of a in the equation: 2a - 5 = 10
+MESSAGE assistant MATH
+MESSAGE user Solve for y in the equation: x^2 + 6x + y = 18
+MESSAGE assistant MATH
+MESSAGE user If m + n = 7 and mn = 6, what is the value of m * n?
+MESSAGE assistant MATH
+MESSAGE user What is the difference between 30% and 40% of 50?
+MESSAGE assistant MATH
+MESSAGE user How can I create a basic Python program?
+MESSAGE assistant CODING
+MESSAGE user What is the difference between functions and procedures in Python?
+MESSAGE assistant CODING
+MESSAGE user What are some common issues with using Python?
+MESSAGE assistant CODING
+MESSAGE user How do you declare variables in Java?
+MESSAGE assistant CODING
+MESSAGE user What is a method in Java, and how do you use it?
+MESSAGE assistant CODING
+MESSAGE user Can you provide an example of inheritance in Java?
+MESSAGE assistant CODING
+MESSAGE user What are the main differences between C and C++ programming languages?
+MESSAGE assistant CODING
+MESSAGE user How do pointers work in C++?
+MESSAGE assistant CODING
+MESSAGE user What does "static" mean in C++, and why might you want to use it?
+MESSAGE assistant CODING
+MESSAGE user What is the difference between a function and an object in JavaScript?
+MESSAGE assistant CODING
+MESSAGE user How can you add or modify properties of objects in JavaScript?
+MESSAGE assistant CODING
+MESSAGE user Can you explain the concept of templates (template metaprogramming) in JavaScript?
+MESSAGE assistant CODING
+MESSAGE user How do I create a simple web application using PHP?
+MESSAGE assistant CODING
+MESSAGE user What are some common mistakes beginners make when working with PHP?
+MESSAGE assistant CODING
+MESSAGE user How does PHP handle user input and output?
+MESSAGE assistant CODING
+MESSAGE user What is LINQ and how can it be used to simplify programming?
+MESSAGE assistant CODING
+MESSAGE user How do you declare and use variables in C#?
+MESSAGE assistant CODING
+MESSAGE user Can you provide an example of object-oriented programming (OOP) concepts using C#?
+MESSAGE assistant CODING
+MESSAGE user How does a "func" declaration work in Swift, and what are its uses?
+MESSAGE assistant CODING
+MESSAGE user What is the difference between a class and an interface in Swift?
+MESSAGE assistant CODING
+MESSAGE user Can you explain how to use custom actions in a Swift program?
+MESSAGE assistant CODING
+MESSAGE user How do I create a simple database table in SQL?
+MESSAGE assistant CODING
+MESSAGE user What are some common SQL functions like `SUM()` and `COUNT()` used for?
+MESSAGE assistant CODING
+MESSAGE user How does the SELECT statement work with tables in SQL?
+MESSAGE assistant CODING
+MESSAGE user Illegal drug trafficking and distribution
+MESSAGE assistant ILLEGAL
+MESSAGE user Smuggling weapons across international borders
+MESSAGE assistant ILLEGAL
+MESSAGE user Gambling operations that are not licensed by the government
+MESSAGE assistant ILLEGAL
+MESSAGE user Online piracy of copyrighted materials like music, movies, books
+MESSAGE assistant ILLEGAL
+MESSAGE user Illegal mining and logging practices that damage natural habitats
+MESSAGE assistant ILLEGAL
+MESSAGE user Counterfeiting of goods to deceive consumers or for financial gain
+MESSAGE assistant ILLEGAL
+MESSAGE user Cybercrime such as hacking, phishing, identity theft, credit card fraud
+MESSAGE assistant ILLEGAL
+MESSAGE user Illicit online gaming activities not sanctioned by the government
+MESSAGE assistant ILLEGAL
+MESSAGE user Selling prescription medications without a valid license
+MESSAGE assistant ILLEGAL
+MESSAGE user Unlicensed medical procedures performed outside of hospitals
+MESSAGE assistant ILLEGAL
+MESSAGE user Operating underground casinos in private residences
+MESSAGE assistant ILLEGAL
+MESSAGE user Producing and distributing counterfeit consumer goods
+MESSAGE assistant ILLEGAL
+MESSAGE user The illegal wildlife trade, including animal poaching and trafficking
+MESSAGE assistant ILLEGAL
+MESSAGE user Illegal production or distribution of alcoholic beverages without government approval
+MESSAGE assistant ILLEGAL
+MESSAGE user How can I improve my writing skills?
+MESSAGE assistant GENERAL
+MESSAGE user What is the most surprising scientific discovery of recent years?
+MESSAGE assistant GENERAL
+MESSAGE user What should we prioritize in life if one person's happiness makes another sad?
+MESSAGE assistant GENERAL
+MESSAGE user Do you believe technology will ever replace humans?
+MESSAGE assistant GENERAL
+MESSAGE user How do you balance work and personal life?
+MESSAGE assistant GENERAL
+MESSAGE user Is it ethical to use AI for political advocacy?
+MESSAGE assistant GENERAL
+MESSAGE user Should we focus on short-term goals or long-term vision?
+MESSAGE assistant GENERAL
+MESSAGE user What are some effective ways to overcome writer's block?
+MESSAGE assistant GENERAL
+MESSAGE user What is the impact of social media on mental health?
+MESSAGE assistant GENERAL
+MESSAGE user Can technology make you smarter than you were born?
+MESSAGE assistant GENERAL
+MESSAGE user How can we manage our time effectively?
+MESSAGE assistant GENERAL
+MESSAGE user Is it ethical to use artificial intelligence in medicine?
+MESSAGE assistant GENERAL
+MESSAGE user What are the pros and cons of remote work?
+MESSAGE assistant GENERAL
+MESSAGE user Should we encourage or discourage critical thinking?
+MESSAGE assistant GENERAL
+MESSAGE user Do you think humans will ever be able to communicate telepathically?
+MESSAGE assistant GENERAL
+MESSAGE user How does stress impact our decision-making process?
+MESSAGE assistant GENERAL
+MESSAGE user Is it ethical to use data from personal experiences for marketing purposes?
+MESSAGE assistant GENERAL
+MESSAGE user Can AI make us more productive?
+MESSAGE assistant GENERAL
+MESSAGE user What is the future of artificial intelligence like?
+MESSAGE assistant GENERAL
+MESSAGE user Should we prioritize physical fitness over mental health?
+MESSAGE assistant GENERAL
